@@ -1,11 +1,8 @@
 
 var mongoose = require("mongoose");
-
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
+
 
 var db = require("../models");
 
@@ -66,6 +63,21 @@ app.get("/scrape", function(req, res) {
         res.json(err);
       });
   });
+
+  app.get("/favorites", function(req, res) {
+    // Grab every document in the Articles collection db.places.find({"continent": "Africa"})
+    db.Article.find({"favorite":"true"})
+      .then(function(dbArticle) {
+        // If we were able to successfully find Articles, send them back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+  
+
   
   // Route for grabbing a specific Article by id, populate it with it's note
   app.get("/articles/:id", function(req, res) {
