@@ -1,26 +1,45 @@
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
   // For each one
-  for (var i = 0; i < data.length; i++) {
+  for (var i = 0; i < 20; i++) {
     // Display the apropos information on the page
     //$("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
 
     var $article = $("<p>")
-    .addClass("article")
+    .addClass("card")
     .attr("data-id",data[i]._id)
-    .text(data[i].title + "<br />" + data[i].link)
     
-    var $button = $("<button>")
+    var $body = $("<div>").addClass("card-body")
+    var $header = $("<h5>").addClass("card-header").text(data[i].title)
+    var $title = $("<h6>").addClass("card-title").text(data[i].link)
+
+    var $button = $("<a href>")
     .addClass("btn btn-primary")
     .attr("id", "favorite" + data[i]._id)
     .text("Favorite")
 
-    $article.append($button)
+    
+    
+    $body.append($title)
+    $body.append($button)
+
+    $article.append($header)
+    $article.append($body)
   $('#articles').append($article)
   $('#articles').append('<br>')
   }
 });
 
+/*
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>*/
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
