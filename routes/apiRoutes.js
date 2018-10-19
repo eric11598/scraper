@@ -6,6 +6,10 @@ var cheerio = require("cheerio");
 
 var db = require("../models");
 
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populater";
+
+mongoose.connect(MONGODB_URI);
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
@@ -64,16 +68,18 @@ app.get("/scrape", function(req, res) {
       });
   });
 
-  
+
+
+  //Grab every article that has favorite set to true 
   app.get("/api/favorites", function(req, res) {
-    // Grab every document in the Articles collection db.places.find({"continent": "Africa"})
+    
     db.Article.find({"favorite":"true"})
       .then(function(dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
+
         res.json(dbArticle);
       })
       .catch(function(err) {
-        // If an error occurred, send it to the client
+
         res.json(err);
       });
   });
@@ -116,17 +122,16 @@ app.get("/scrape", function(req, res) {
       });
   });
 
-  app.put("/articles/:id", function(req, res) {
-    // Create a new note and pass the req.body to the entry
 
+  //Update article to favorites
+  app.put("/articles/:id", function(req, res) {
     db.Article.update({_id: req.params.id}, {$set: {favorite:req.body.favorite}
       })
       .then(function(dbArticle) {
-        // If we were able to successfully update an Article, send it back to the client
+  
         res.json(dbArticle);
       })
       .catch(function(err) {
-        // If an error occurred, send it to the client
         res.json(err);
       });
   });
