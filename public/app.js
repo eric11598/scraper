@@ -2,8 +2,6 @@
 $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < 20; i++) {
-    // Display the apropos information on the page
-    //$("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
 
     var $article = $("<p>")
     .addClass("card")
@@ -26,6 +24,11 @@ $.getJSON("/articles", function(data) {
       $button.addClass('disabled')
       $button.text('Favorited')
     }
+
+    else {
+      $button.removeClass('disabled')
+      $button.text('Favorite')
+    }
     
     
     $body.append($title)
@@ -41,8 +44,6 @@ $.getJSON("/articles", function(data) {
 $.getJSON("/api/favorites", function(data) {
   // For each one
   for (var i = 0; i < 20; i++) {
-    // Display the apropos information on the page
-    //$("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
 
     var $article = $("<p>")
     .addClass("card")
@@ -76,21 +77,6 @@ $.getJSON("/api/favorites", function(data) {
   $('#favoriteArticles').append('<br>')
   }
 });
-
-
-/*
-<div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="#" class="card-link">Card link</a>
-    <a href="#" class="card-link">Another link</a>
-  </div>
-</div>*/
-
-// Whenever someone clicks a p tag
-
 
 
 $(document).on("click", "#removeFavorite", function() {
@@ -149,15 +135,6 @@ $(document).on("click", "#addNote", function() {
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
 
-  /*
-  var $form = $("<form>")
-  var $formgroup = $("<div>").addClass("form-group")
-  var $textarea = $("<textarea>").addClass("form-control").attr("id","addNote").attr("rows",3)
-
-  $formgroup.append($textarea)
-  $form.append($formgroup)
-  $('#modal-body').append($form)*/
-
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
@@ -173,19 +150,19 @@ $(document).on("click", "#addNote", function() {
       $("#saveNote").attr("data-id",thisId)
       // If there's a note in the article
       if (data.note) {
-        console.log(data.note)
         
-        /*
-        <div class="card">
-          <div class="card-body">
-            This is some text within a card body.
-          </div>
-          </div>*/
-
         for(i = 0; i<data.note.length; i++)
         {
           var $note = $("<p>").addClass("card")
           var $body = $("<div>").addClass("card-body").text(data.note[i].body)
+
+          var $button = $("<a href>")
+          .addClass("btn btn-secondary")
+          .attr("id", "removeNote")
+          .attr("data-id",thisId)
+          .text("X")
+
+          $body.append($button)
 
           $note.append($body)
           $("#notes-body").append($note); 
