@@ -16,15 +16,18 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.get("/", function(req, res) {
+    console.log("yeert")
     res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
   app.get("/favorites", function(req, res) {
+    console.log("yeert")
     res.sendFile(path.join(__dirname, "../public/favorites.html"));
   });
 
   // If no matching route is found default to home
   app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/home.html"));
+    console.log("yeert")
+    res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 };

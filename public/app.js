@@ -15,7 +15,8 @@ $.getJSON("/articles", function(data) {
 
     var $button = $("<a href>")
     .addClass("btn btn-primary")
-    .attr("id", "favorite" + data[i]._id)
+    .attr("id", "saveFavorite")
+    .attr("data-id",data[i]._id)
     .text("Favorite")
 
     
@@ -30,6 +31,38 @@ $.getJSON("/articles", function(data) {
   }
 });
 
+$.getJSON("/api/favorites", function(data) {
+  // For each one
+  for (var i = 0; i < 20; i++) {
+    // Display the apropos information on the page
+    //$("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+
+    var $article = $("<p>")
+    .addClass("card")
+    .attr("data-id",data[i]._id)
+    
+    var $body = $("<div>").addClass("card-body")
+    var $header = $("<h5>").addClass("card-header").text(data[i].title)
+    var $title = $("<h6>").addClass("card-title").text(data[i].link)
+
+    var $button = $("<a href>")
+    .addClass("btn btn-secondary")
+    .attr("id", "favorite" + data[i]._id)
+    .text("Add Note")
+
+    
+    
+    $body.append($title)
+    $body.append($button)
+
+    $article.append($header)
+    $article.append($body)
+  $('#favoriteArticles').append($article)
+  $('#favoriteArticles').append('<br>')
+  }
+});
+
+
 /*
 <div class="card" style="width: 18rem;">
   <div class="card-body">
@@ -42,6 +75,7 @@ $.getJSON("/articles", function(data) {
 </div>*/
 
 // Whenever someone clicks a p tag
+/*
 $(document).on("click", "p", function() {
   // Empty the notes from the note section
   $("#notes").empty();
@@ -73,9 +107,38 @@ $(document).on("click", "p", function() {
         $("#bodyinput").val(data.note.body);
       }
     });
+});*/
+
+
+$(document).on("click", "#saveFavorite", function() {
+  
+  console.log("lol")
+
+  
+
+  var thisId = $(this).attr("data-id");
+  
+  
+  $.ajax({
+    method: "PUT",
+    url: "/articles/" + thisId,
+    data: {
+      // Value taken from title input
+      favorite: true
+    }
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);
+      // Empty the notes section
+
+    });
+    return false
 });
 
 // When you click the savenote button
+/*
 $(document).on("click", "#savenote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
@@ -102,4 +165,4 @@ $(document).on("click", "#savenote", function() {
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");
   $("#bodyinput").val("");
-});
+});*/

@@ -64,7 +64,8 @@ app.get("/scrape", function(req, res) {
       });
   });
 
-  app.get("/favorites", function(req, res) {
+  
+  app.get("/api/favorites", function(req, res) {
     // Grab every document in the Articles collection db.places.find({"continent": "Africa"})
     db.Article.find({"favorite":"true"})
       .then(function(dbArticle) {
@@ -114,5 +115,23 @@ app.get("/scrape", function(req, res) {
         res.json(err);
       });
   });
+
+  app.put("/articles/:id", function(req, res) {
+    // Create a new note and pass the req.body to the entry
+
+    db.Article.update({_id: req.params.id}, {$set: {favorite:req.body.favorite}
+      })
+      .then(function(dbArticle) {
+        // If we were able to successfully update an Article, send it back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+
+
+
 
 };
