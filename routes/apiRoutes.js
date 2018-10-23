@@ -122,8 +122,18 @@ app.get("/scrape", function(req, res) {
       });
   });
 
+  app.delete("/notes/:id", function(req, res) {
+    db.Note.remove({_id: req.params.id})
+      .then(function(dbNote) {
+  
+          res.json(dbNote);
+        })
+        .catch(function(err) {
+          res.json(err);
+        });
+    });
 
-  //Update article to favorites
+  //Add or remove article from favorites
   app.put("/articles/:id", function(req, res) {
     db.Article.update({_id: req.params.id}, {$set: {favorite:req.body.favorite}
       })
