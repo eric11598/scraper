@@ -77,6 +77,19 @@ $.getJSON("/api/favorites", function(data) {
   }
 });
 
+$(document).on("click", "#scrape", function() {
+
+  $.ajax({
+    method: "GET",
+    url: "/scrape/",
+  })
+    // With that done
+    .then(function(data) {
+      // Log the response
+      console.log(data);
+      // Empty the notes section
+    });
+});
 
 $(document).on("click", "#removeFavorite", function() {
   
