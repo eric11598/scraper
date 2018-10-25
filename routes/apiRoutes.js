@@ -11,7 +11,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populate
 
 mongoose.connect(MONGODB_URI);
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
 
 // Routes
