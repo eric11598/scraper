@@ -7,7 +7,7 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populater";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
 mongoose.connect(MONGODB_URI);
 // Connect to the Mongo DB
@@ -21,18 +21,25 @@ module.exports = function(app) {
 app.get("/scrape", function(req, res) {
   console.log("lol")
 
-    axios.get("http://www.echojs.com/").then(function(response) {
+    axios.get("http://www.nytimes.com").then(function(response) {
       var $ = cheerio.load(response.data);
   
-      $("article h2").each(function(i, element) {
+      $("article.css-180b3ld").each(function(i, element) {
         var result = {};
   
         result.title = $(this)
-          .children("a")
-          .text();
+          .find("a")
+          .text()
+          .trim();
+
         result.link = $(this)
-          .children("a")
+          .find("a")
           .attr("href");
+
+        result.summary = $(this)
+          .find("p")
+          .text()
+          .trim();
 
 
   

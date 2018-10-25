@@ -9,7 +9,8 @@ $.getJSON("/articles", function(data) {
     
     var $body = $("<div>").addClass("card-body")
     var $header = $("<h5>").addClass("card-header").text(data[i].title)
-    var $title = $("<h6>").addClass("card-title").text(data[i].link)
+    var $title = $("<h4>").addClass("card-title").text(data[i].summary)
+    var $summary = $("<h6>").addClass("card-text").text(data[i].link)
 
 
     var $button = $("<a href>").addClass("btn btn-primary")
@@ -31,10 +32,13 @@ $.getJSON("/articles", function(data) {
     
     
     $body.append($title)
+    $body.append($summary)
     $body.append($button)
 
     $article.append($header)
     $article.append($body)
+
+
   $('#articles').append($article)
   $('#articles').append('<br>')
   }
@@ -50,7 +54,8 @@ $.getJSON("/api/favorites", function(data) {
     
     var $body = $("<div>").addClass("card-body")
     var $header = $("<h5>").addClass("card-header").text(data[i].title)
-    var $title = $("<h6>").addClass("card-title").text(data[i].link)
+    var $title = $("<h4>").addClass("card-title").text(data[i].summary)
+    var $summary = $("<h6>").addClass("card-text").text(data[i].link)
 
     var $button = $("<a href>")
     .addClass("btn btn-secondary")
@@ -67,11 +72,13 @@ $.getJSON("/api/favorites", function(data) {
     
     
     $body.append($title)
+    $body.append($summary)
     $body.append($button)
     $body.append($remove)
 
     $article.append($header)
     $article.append($body)
+    //$article.append($summary)
   $('#favoriteArticles').append($article)
   $('#favoriteArticles').append('<br>')
   }
@@ -85,7 +92,8 @@ $(document).on("click", "#scrape", function() {
   })
     // With that done
     .then(function(data) {
-      // Log the response
+      location.reload();
+
       console.log(data);
       // Empty the notes section
     });

@@ -16,11 +16,11 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  /*
+  
   summary: {
     type: String,
-    default: "lol",
-  },*/
+    required: true,
+  },
 
   favorite: {
     type: Boolean,
