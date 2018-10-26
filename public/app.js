@@ -118,11 +118,14 @@ $(document).on("click", "#removeFavorite", function() {
       // Empty the notes section
 
     });
+    return false;
 });
 
 
 
 $(document).on("click", "#saveFavorite", function() {
+  //event.preventDefault();
+  console.log("saveFavorite")
   
   var thisId = $(this).attr("data-id");
    
@@ -141,6 +144,7 @@ $(document).on("click", "#saveFavorite", function() {
       // Empty the notes section
 
     });
+    return false;
 });
 
 // When you click the savenote button
@@ -210,7 +214,7 @@ $(document).on("click", "#removeNote", function() {
       console.log(data);
       // Empty the notes section
     });
-
+    $('#notesModal').modal('toggle')
 });
 
 
